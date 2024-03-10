@@ -10,8 +10,8 @@ function players(name = "",playerNum){ //maybe just declare two players here and
  return {user,playerNum};
 }
 
-function gameLogic(gameTurns,getMove){
- const {game} = gameBoard();
+
+function gameLogic(gameTurns,getMove,game){
  if(gameTurns % 2 == 0){
   if(getMove == 1){
    game[0][0] = "x";
@@ -42,7 +42,7 @@ function gameLogic(gameTurns,getMove){
   }
  }
  else{
-    if(getMove == 1){
+  if(getMove == 1){
    game[0][0] = "o";
   }
   else if(getMove == 2){
@@ -70,30 +70,27 @@ function gameLogic(gameTurns,getMove){
    game[2][2] = "o";
   }
  }
- return {game};
 }
+
 function gameControl(){
   const {game} = gameBoard();
   const player1 = players("player1",0); //get rid of playerNum
   const player2 = players("player2",1);
 
-  let gameTurns = 0;
   return function gameStarter(){
-   while(gameTurns !=2){ //how would you get input now?
-    let getMove = prompt("Where would you like to place your position: ")
-    if(gameTurns % 2 == 0){
-     if(getMove == 1){
-       gameLogic(gameTurns,getMove);
-       console.log(game);
-       gameTurns++;
-     }
+   for(let i = 0; i < 2 ; i++){ 
+    let getMove = prompt("Where would you like to place your position: ") //gets user input
+    if(i % 2 == 0){
+      gameLogic(i,getMove,game);
+      console.log(game);
     }
+    
     else{
-     gameLogic(gameTurns,getMove)
-     console.log(game);
-     gameTurns++;
+      gameLogic(i,getMove,game);
+      console.log(game);
     }
    }
+
   }
 }
 
