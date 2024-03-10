@@ -72,25 +72,193 @@ function gameLogic(gameTurns,getMove,game){
  }
 }
 
+function gameWinner(game,gameTurn){ //there has to be a way to make this into one func
+  if(gameTurn % 2 == 0){ //if true we have a winner and based on gameturn output who the winner is 
+    if(game[0][0] == "x" && game[0][1] == "x" && game[0][2] == "x"){
+      return true;
+    }
+    else if(game[1][0] == "x" && game[1][1] =="x" && game[1][2] =="x"){
+      return true;
+
+    }
+    else if(game[2][0] =="x" && game[2][1] =="x" && game[2][2] =="x"){
+      return true;
+
+    }
+    else if(game[0][0] =="x" && game[1][0] == "x" && game[2][0] =="x"){
+      return true;
+
+    }
+    else if(game[0][1] =="x" && game[1][1] =="x" && game[2][1] =="x"){
+      return true;
+
+    }
+    else if(game[0][2] =="x" && game[1][2] =="x" && game[2][2] =="x"){
+      return true;
+
+    }
+    else if(game[0][0] =="x" && game[1][1] == "x" && game[2][2] =="x"){
+      return true;
+
+    }
+    else if(game[0][2] == "x" && game[1][1] == "x" && game[2][0] =="x"){
+      return true;
+
+    }
+    if(gameTurn == 9){ //this is for when there are no winners
+      return false;
+
+    }
+  }
+  else{
+    if(game[0][0] == "o" && game[0][1] == "o" && game[0][2] == "o"){
+      return true;
+    }
+    else if(game[1][0] == "o" && game[1][1] =="o" && game[1][2] =="o"){
+      return true;
+    }
+    else if(game[2][0] =="o" && game[2][1] =="o" && game[2][2] =="o"){
+      return true;
+
+    }
+    else if(game[0][0] =="o" && game[1][0] == "o" && game[2][0] =="o"){
+      return true;
+
+    }
+    else if(game[0][1] =="o" && game[1][1] =="o" && game[2][1] =="o"){
+      return true;
+
+    }
+    else if(game[0][2] =="o" && game[1][2] =="o" && game[2][2] =="o"){
+      return true;
+
+    }
+    else if(game[0][0] =="o" && game[1][1] == "o" && game[2][2] =="o"){
+      return true;
+
+    }
+    else if(game[0][2] == "o" && game[1][1] == "o" && game[2][0] == "o"){
+      return true;
+
+    }
+    if(gameTurn == 9){ //this is for when there are no winners
+      return false;
+    }
+  }
+}
+
+function noRepeat(game,gameTurn){ //this checks for repeats
+  if(gameTurn % 2 == 0){
+    if(game[0][0] == "o"){
+      return true;
+    }
+    else if(game[0][1] == "o"){
+      return true;
+    }
+    else if(game[0][2] == "o"){
+      return true;
+    }
+    else if(game[1][0] == "o"){
+      return true;
+    }
+    else if(game[1][1] == "o"){
+      return true;
+    }
+    else if(game[1][2] == "o"){
+      return true;
+    }
+    else if(game[2][0] == "o"){
+      return true;
+    }
+    else if(game[2][1] == "o"){
+      return true;
+    }
+    else if(game[2][2] == "o"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  else{
+    if(game[0][0] == "x"){
+    return true;
+    }
+    else if(game[0][1] == "x"){
+      return true;
+    }
+    else if(game[0][2] == "x"){
+      return true;
+    }
+    else if(game[1][0] == "x"){
+      return true;
+    }
+    else if(game[1][1] == "x"){
+      return true;
+    }
+    else if(game[1][2] == "x"){
+      return true;
+    }
+    else if(game[2][0] == "x"){
+      return true;
+    }
+    else if(game[2][1] == "x"){
+      return true;
+    }
+    else if(game[2][2] == "x"){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+}
+
+
 function gameControl(){
   const {game} = gameBoard();
   const player1 = players("player1",0); //get rid of playerNum
   const player2 = players("player2",1);
-
+  let gameTurn = 0
   return function gameStarter(){
-   for(let i = 0; i < 2 ; i++){ 
-    let getMove = prompt("Where would you like to place your position: ") //gets user input
-    if(i % 2 == 0){
-      gameLogic(i,getMove,game);
+   while(gameTurn != 9){ 
+    let getMove = prompt("Where would you like to place your position: ");
+    if(gameTurn % 2 == 0){
+      gameLogic(gameTurn,getMove,game);
       console.log(game);
+      gameTurn++;
+
+      if(noRepeat(game,gameTurn) == true){
+        console.log("Player1 please pick another spot this has already been taken");
+        console.log(gameTurn);
+        gameLogic(gameTurn,getMove,game);
+      }
+      if(gameWinner(game,gameTurn) == true){ //if theres an x or y here then tell user to input something else
+        console.log("player1 won!");
+        break;
+      }
+      if(gameWinner(game,gameTurn) == 8){
+        console.log("nobody won rip");
+      }
     }
-    
     else{
-      gameLogic(i,getMove,game);
+      gameLogic(gameTurn,getMove,game);
       console.log(game);
+      gameTurn++;
+
+      if(noRepeat(game,gameTurn) == true){
+        console.log("Player2 please pick another spot this has already been taken");
+        gameLogic(gameTurn,getMove,game);
+      }
+      if(gameWinner(game,gameTurn) == true){
+        console.log("player2 won!");
+        break;
+      }
+      if(gameWinner(game,gameTurn) == 8){
+        console.log("nobody won rip");
+      }
     }
    }
-
   }
 }
 
