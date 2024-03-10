@@ -147,69 +147,63 @@ function gameWinner(game,gameTurn){ //there has to be a way to make this into on
   }
 }
 
-function noRepeat(game,gameTurn){ //this checks for repeats
+function noRepeat(game,gameTurn){ //this checks for repeats i think you need to implement this for the DOM
   if(gameTurn % 2 == 0){
     if(game[0][0] == "o"){
       return true;
     }
-    else if(game[0][1] == "o"){
+    if(game[0][1] == "o"){
       return true;
     }
-    else if(game[0][2] == "o"){
+    if(game[0][2] == "o"){
       return true;
     }
-    else if(game[1][0] == "o"){
+    if(game[1][0] == "o"){
       return true;
     }
-    else if(game[1][1] == "o"){
+    if(game[1][1] == "o"){
       return true;
     }
-    else if(game[1][2] == "o"){
+    if(game[1][2] == "o"){
       return true;
     }
-    else if(game[2][0] == "o"){
+    if(game[2][0] == "o"){
       return true;
     }
-    else if(game[2][1] == "o"){
+    if(game[2][1] == "o"){
       return true;
     }
-    else if(game[2][2] == "o"){
+    if(game[2][2] == "o"){
       return true;
-    }
-    else{
-      return false;
     }
   }
   else{
     if(game[0][0] == "x"){
     return true;
     }
-    else if(game[0][1] == "x"){
+    if(game[0][1] == "x"){
       return true;
     }
-    else if(game[0][2] == "x"){
+    if(game[0][2] == "x"){
       return true;
     }
-    else if(game[1][0] == "x"){
+    if(game[1][0] == "x"){
       return true;
     }
-    else if(game[1][1] == "x"){
+    if(game[1][1] == "x"){
       return true;
     }
-    else if(game[1][2] == "x"){
+    if(game[1][2] == "x"){
       return true;
     }
-    else if(game[2][0] == "x"){
+    if(game[2][0] == "x"){
       return true;
     }
-    else if(game[2][1] == "x"){
+    if(game[2][1] == "x"){
       return true;
     }
-    else if(game[2][2] == "x"){
+    if(game[2][2] == "x"){
       return true;
-    }
-    else{
-      return false;
     }
   }
 }
@@ -222,17 +216,18 @@ function gameControl(){
   let gameTurn = 0
   return function gameStarter(){
    while(gameTurn != 9){ 
-    let getMove = prompt("Where would you like to place your position: ");
+    let getMove = 0 //prompt("Where would you like to place your position: ");
     if(gameTurn % 2 == 0){
       gameLogic(gameTurn,getMove,game);
       console.log(game);
       gameTurn++;
-
+      /*
       if(noRepeat(game,gameTurn) == true){
         console.log("Player1 please pick another spot this has already been taken");
         console.log(gameTurn);
         gameLogic(gameTurn,getMove,game);
       }
+      */
       if(gameWinner(game,gameTurn) == true){ //if theres an x or y here then tell user to input something else
         console.log("player1 won!");
         break;
@@ -245,11 +240,12 @@ function gameControl(){
       gameLogic(gameTurn,getMove,game);
       console.log(game);
       gameTurn++;
-
+      /*
       if(noRepeat(game,gameTurn) == true){
         console.log("Player2 please pick another spot this has already been taken");
         gameLogic(gameTurn,getMove,game);
       }
+      */
       if(gameWinner(game,gameTurn) == true){
         console.log("player2 won!");
         break;
