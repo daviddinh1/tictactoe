@@ -213,58 +213,54 @@ function gameControl(){
   const {game} = gameBoard();
   const player1 = players("player1",0); //get rid of playerNum
   const player2 = players("player2",1);
-  let gameTurn = 0
+  let gameTurn = 0;
+  display(game);
   return function gameStarter(){
-   while(gameTurn != 9){ 
-    let getMove = 0 //prompt("Where would you like to place your position: ");
-    if(gameTurn % 2 == 0){
-      gameLogic(gameTurn,getMove,game);
-      console.log(game);
-      gameTurn++;
-      /*
-      if(noRepeat(game,gameTurn) == true){
-        console.log("Player1 please pick another spot this has already been taken");
-        console.log(gameTurn);
-        gameLogic(gameTurn,getMove,game);
-      }
-      */
-      if(gameWinner(game,gameTurn) == true){ //if theres an x or y here then tell user to input something else
-        console.log("player1 won!");
-        break;
-      }
-      if(gameWinner(game,gameTurn) == 8){
-        console.log("nobody won rip");
-      }
+   const container = document.querySelector(".container");
+   
+   for(let i = 0; i < container.children.length; i++){
+    const child = container.children[i]; 
+     child.addEventListener("click", () => {
+      let getMove = (i+1);
+        if(gameTurn % 2 == 0){
+          gameLogic(gameTurn,getMove,game);
+          console.log(game);
+          child.textContent ="x";
+          if(gameWinner(game,gameTurn) == true){
+            console.log("player1 won!");
+          }
+          if(gameWinner(game,gameTurn) == 8){
+            console.log("nobody won rip");
+          }
+          gameTurn++;
+
+        }
+        else{
+          gameLogic(gameTurn,getMove,game);
+          console.log(game);
+          child.textContent ="o";
+    
+          if(gameWinner(game,gameTurn) == true){
+            console.log("player2 won!");
+          }
+          if(gameWinner(game,gameTurn) == 8){
+            console.log("nobody won rip");
+          }
+          gameTurn++;
+
+        }
+      
+      });
     }
-    else{
-      gameLogic(gameTurn,getMove,game);
-      console.log(game);
-      gameTurn++;
-      /*
-      if(noRepeat(game,gameTurn) == true){
-        console.log("Player2 please pick another spot this has already been taken");
-        gameLogic(gameTurn,getMove,game);
-      }
-      */
-      if(gameWinner(game,gameTurn) == true){
-        console.log("player2 won!");
-        break;
-      }
-      if(gameWinner(game,gameTurn) == 8){
-        console.log("nobody won rip");
-      }
-    }
-   }
   }
 }
 
-function display(){
+function display(game){ //takes from our game logic
   let counter = 1;
-  const container = document.querySelector(".container");
-  const {game} = gameBoard();
+  var container = document.querySelector(".container");
   for(let i = 0; i < game.length; i++){
     for(let j = 0; j < game[0].length; j++){
-      const newCard = document.createElement("div");
+      var newCard = document.createElement("div");
       newCard.setAttribute("id","card" + counter);
       newCard.classList.add("card");
       newCard.textContent = game[i][j];
@@ -274,8 +270,7 @@ function display(){
   }
 }
 
-//const game1 = gameControl();
-//game1();
-display();
 
 
+const game1 = gameControl();
+game1();
