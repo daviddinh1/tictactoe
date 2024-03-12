@@ -258,14 +258,24 @@ function gameControl(){
   }
 }
 
-const game1 = gameControl();
-game1();
+function display(){
+  let counter = 1;
+  const container = document.querySelector(".container");
+  const {game} = gameBoard();
+  for(let i = 0; i < game.length; i++){
+    for(let j = 0; j < game[0].length; j++){
+      const newCard = document.createElement("div");
+      newCard.setAttribute("id","card" + counter);
+      newCard.classList.add("card");
+      newCard.textContent = game[i][j];
+      counter++;
+      container.appendChild(newCard);
+    }
+  }
+}
+
+//const game1 = gameControl();
+//game1();
+display();
 
 
-//create two players within an object
-
-
-//how to make each player do a move
-
-
-//then create logic for win status
