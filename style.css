@@ -39,3 +39,8 @@ h1{
 .card:hover{
  background-color: #ADD8E6;
 }
+
+.winner{
+  color: white;
+  font-size: 40px;
+}

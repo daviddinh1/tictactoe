@@ -105,7 +105,7 @@ function gameWinner(game,gameTurn){ //there has to be a way to make this into on
       return true;
 
     }
-    if(gameTurn == 9){ //this is for when there are no winners
+    if(gameTurn == 8){ //this is for when there are no winners
       return false;
 
     }
@@ -141,7 +141,7 @@ function gameWinner(game,gameTurn){ //there has to be a way to make this into on
       return true;
 
     }
-    if(gameTurn == 9){ //this is for when there are no winners
+    if(gameTurn == 8){ //this is for when there are no winners
       return false;
     }
   }
@@ -223,33 +223,59 @@ function gameControl(){
      child.addEventListener("click", () => {
       let getMove = (i+1);
         if(gameTurn % 2 == 0){
-          gameLogic(gameTurn,getMove,game);
           console.log(game);
-          child.textContent ="x";
-          if(gameWinner(game,gameTurn) == true){
-            console.log("player1 won!");
+          if(child.textContent == "o"){
+            child.textContent = "o";
+            gameTurn--;
+            gameLogic(gameTurn,getMove,game);
+          }else{
+            child.textContent = "x";
+            gameLogic(gameTurn,getMove,game);
+
           }
-          if(gameWinner(game,gameTurn) == 8){
-            console.log("nobody won rip");
+          if(gameWinner(game,gameTurn) == true){
+            let winner = document.createElement("div");
+            winner.setAttribute("class","winner");
+            winner.textContent = "Player 1 won!!"
+            container.append(winner);
           }
           gameTurn++;
+
+          if(gameWinner(game,gameTurn) == false){
+            let winner = document.createElement("div");
+            winner.setAttribute("class","winner");
+            winner.textContent = "nobody won ;c";
+            container.append(winner);
+          }
 
         }
         else{
-          gameLogic(gameTurn,getMove,game);
-          console.log(game);
-          child.textContent ="o";
-    
+          if(child.textContent == "x"){ //checks repeats
+            child.textContent = "x";
+            gameTurn--;
+            gameLogic(gameTurn,getMove,game);
+
+          }else{
+            child.textContent ="o";
+            gameLogic(gameTurn,getMove,game);
+          }
           if(gameWinner(game,gameTurn) == true){
-            console.log("player2 won!");
+            let winner = document.createElement("div");
+            winner.setAttribute("class","winner");
+            winner.textContent = "nobody won ;c";
+            container.append(winner);         
           }
-          if(gameWinner(game,gameTurn) == 8){
-            console.log("nobody won rip");
-          }
+          console.log(gameTurn);
           gameTurn++;
 
+          if(gameWinner(game,gameTurn) == false){
+            let winner = document.createElement("div");
+            winner.setAttribute("class","winner");
+            winner.textContent = "nobody won ;c";
+            container.append(winner);          
+          }
+
         }
-      
       });
     }
   }
